@@ -16,3 +16,7 @@ um número infinito de vezes.
 - As informações exibidas no card devem ser passadas pelo componente pai,
   ou seja, o Feed.
 - Não esqueça de criar a tipagem para o card na pasta types.
+
+- Utilidades:
+  - <https://icons.expo.fyi/Index>
+  - <https://reactnative.dev/docs/flexbox>
