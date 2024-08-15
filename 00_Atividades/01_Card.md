@@ -20,5 +20,5 @@ um número infinito de vezes.
 - Utilidades:
   - <https://icons.expo.fyi/Index>
   - <https://reactnative.dev/docs/flexbox>
-  - <https://unsplash.com/pt-br>
+  - <https://picsum.photos/200>
   - <https://robohash.org/cat> Troque o /cat por qualquer palavra
