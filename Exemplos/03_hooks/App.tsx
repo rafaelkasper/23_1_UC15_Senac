@@ -7,12 +7,19 @@ import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+interface IStorage {
+  username: string;
+  password: string;
+}
 
 export default function App() {
   const [username, setUsername] = useState<string>("");
@@ -25,7 +32,23 @@ export default function App() {
     FiraCode_700Bold,
   });
 
+  const storeData = async (value: IStorage) => {
+    const jsonValue = JSON.stringify(value);
+
+    if (Platform.OS !== "web") {
+      try {
+        await AsyncStorage.setItem("@hooks-userInfo", jsonValue);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      localStorage.setItem("@hooks-userInfo", jsonValue);
+    }
+  };
+
   const showLogedAlert = () => {
+    storeData({ username: username, password: password });
+
     Alert.alert("Atenção!!!", `Nome: ${username}`, [
       { text: "Legal!!!", onPress: () => console.log("apertou o botão") },
     ]);
