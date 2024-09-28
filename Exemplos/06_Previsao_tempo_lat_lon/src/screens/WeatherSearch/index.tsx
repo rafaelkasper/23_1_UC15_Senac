@@ -1,28 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SourceCodePro_900Black } from "@expo-google-fonts/source-code-pro";
 import { useFonts } from "expo-font";
-import {
-  ButtonText,
-  Caption,
-  Card,
-  Container,
-  SearchButton,
-  SearchInput,
-  SubTitle,
-  Icon,
-  TextLarge,
-} from "./styles";
+import * as Location from "expo-location";
+import { Caption, Card, Container, SubTitle, Icon, TextLarge } from "./styles";
 import axios from "axios";
-import { WeatherResponse } from "../../types/weather";
-import { Keyboard, Text } from "react-native";
+import { LatitudeLongitude, WeatherResponse } from "../../types/weather";
+import { Text } from "react-native";
 import { SkeletonCard } from "../../components/SkeletonCard";
 
 const WeatherSearch = () => {
-  const [searchParam, setSearchParam] = useState("");
   const [weatherData, setWeatherData] = useState<WeatherResponse | undefined>(
     undefined
   );
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState<LatitudeLongitude | any>();
 
   const [loaded] = useFonts({
     SourceCodePro_900Black,
@@ -32,26 +23,43 @@ const WeatherSearch = () => {
   const APP_ID = "";
   const API_CONFIGS = "units=metric&lang=pt_br";
 
-  const FULL_URL = `${BASE_URL}?q=${searchParam}&appid=${APP_ID}&${API_CONFIGS}`;
+  const FULL_URL = `${BASE_URL}?lat=${location?.coords.latitude}&lon=${location?.coords.longitude}&appid=${APP_ID}&${API_CONFIGS}`;
 
   const handleSearchWeather = async () => {
-    if (searchParam && searchParam.length > 0) {
-      Keyboard.dismiss();
+    try {
+      setLoading(true);
+      const response = await axios.get<WeatherResponse>(FULL_URL);
 
-      try {
-        setLoading(true);
-        const response = await axios.get<WeatherResponse>(FULL_URL);
-
-        setWeatherData(response.data);
-        setSearchParam("");
-      } catch (error) {
-        console.log(error);
-        setWeatherData(undefined);
-      } finally {
-        setLoading(false);
-      }
+      setWeatherData(response.data);
+    } catch (error) {
+      console.log(error);
+      setWeatherData(undefined);
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+
+      setLocation(location);
+    })();
+  }, []);
+
+  useEffect(() => {
+    const request = async () => {
+      await handleSearchWeather();
+    };
+
+    request();
+  }, [location]);
 
   return (
     loaded && (
@@ -67,33 +75,7 @@ const WeatherSearch = () => {
           >
             Aclimator
           </Text>
-          <Card
-            style={{
-              width: "95%",
-              /*
-              ios ->
-              borderWidth: 1,
-              borderRadius: 2,
-              borderColor: "#25252544",
-              borderBottomWidth: 4,
-              shadowColor: "#000",
-              shadowOffset: { width: 4, height: 6 },
-              shadowOpacity: 0.8,
-              shadowRadius: 2,
-              */
-              elevation: 8,
-            }}
-          >
-            <SearchInput
-              onChangeText={setSearchParam}
-              value={searchParam}
-              placeholder="Escreva a cidade"
-              returnKeyType="search"
-            />
-            <SearchButton onPress={handleSearchWeather}>
-              <ButtonText>Buscar</ButtonText>
-            </SearchButton>
-          </Card>
+
           {!!weatherData && !loading && (
             <Card
               style={{
