@@ -35,7 +35,7 @@ const WeatherSearch = () => {
   });
 
   const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
-  const APP_ID = "e4b4c5f18e7a71e7b43a24ccc9b3cffa";
+  const APP_ID = "";
   const API_CONFIGS = "units=metric&lang=pt_br";
 
   const FULL_URL = `${BASE_URL}?q=${searchParam}&appid=${APP_ID}&${API_CONFIGS}`;
