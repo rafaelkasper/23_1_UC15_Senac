@@ -2,6 +2,11 @@ import { useState } from "react";
 import { SourceCodePro_900Black } from "@expo-google-fonts/source-code-pro";
 import { useFonts } from "expo-font";
 import {
+  Feather,
+  MaterialCommunityIcons,
+  FontAwesome6,
+} from "@expo/vector-icons";
+import {
   ButtonText,
   Caption,
   Card,
@@ -11,6 +16,7 @@ import {
   SubTitle,
   Icon,
   TextLarge,
+  Row,
 } from "./styles";
 import axios from "axios";
 import { WeatherResponse } from "../../types/weather";
@@ -29,7 +35,7 @@ const WeatherSearch = () => {
   });
 
   const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
-  const APP_ID = "";
+  const APP_ID = "e4b4c5f18e7a71e7b43a24ccc9b3cffa";
   const API_CONFIGS = "units=metric&lang=pt_br";
 
   const FULL_URL = `${BASE_URL}?q=${searchParam}&appid=${APP_ID}&${API_CONFIGS}`;
@@ -51,6 +57,10 @@ const WeatherSearch = () => {
         setLoading(false);
       }
     }
+  };
+
+  const capitalizeFirstLetter = (term: string) => {
+    return `${term.charAt(0).toUpperCase()}${term.slice(1)}`;
   };
 
   return (
@@ -82,6 +92,7 @@ const WeatherSearch = () => {
               shadowRadius: 2,
               */
               elevation: 8,
+              padding: 16,
             }}
           >
             <SearchInput
@@ -95,9 +106,10 @@ const WeatherSearch = () => {
             </SearchButton>
           </Card>
           {!!weatherData && !loading && (
-            <Card
-              style={{
-                /*
+            <>
+              <Card
+                style={{
+                  /*
               borderWidth: 1,
               borderRadius: 2,
               borderColor: "#25252544",
@@ -107,26 +119,65 @@ const WeatherSearch = () => {
               shadowOpacity: 0.8,
               shadowRadius: 2,
               */
-                elevation: 8,
-              }}
-            >
-              <SubTitle>{weatherData?.name}</SubTitle>
-              <TextLarge>{Math.round(weatherData.main.temp)} ºC</TextLarge>
-
-              <Icon
-                source={{
-                  uri: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`,
+                  elevation: 8,
                 }}
-              />
-              <SubTitle>
-                {weatherData?.weather[0].description.toUpperCase()}
-              </SubTitle>
-              <Caption>
-                Sensação térmica: {Math.round(weatherData?.main.feels_like)} ºC
-              </Caption>
-              <Caption>Min: {Math.round(weatherData.main.temp_min)} ºC</Caption>
-              <Caption>Max: {Math.round(weatherData.main.temp_max)} ºC</Caption>
-            </Card>
+              >
+                <Row>
+                  <Feather name="map-pin" size={22} color="#fff" />
+                  <SubTitle>{weatherData?.name}</SubTitle>
+                </Row>
+                <Row>
+                  <Feather name="thermometer" size={40} color="#fff" />
+                  <TextLarge>{Math.round(weatherData.main.temp)} ºC</TextLarge>
+                </Row>
+                <Icon
+                  source={{
+                    uri: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`,
+                  }}
+                />
+                <SubTitle>
+                  {capitalizeFirstLetter(weatherData?.weather[0].description)}
+                </SubTitle>
+                <Row>
+                  <MaterialCommunityIcons
+                    name="coolant-temperature"
+                    size={20}
+                    color="#fff"
+                  />
+                  <Caption>
+                    {Math.round(weatherData?.main.feels_like)} ºC
+                  </Caption>
+                </Row>
+                <Row>
+                  <FontAwesome6
+                    name="temperature-arrow-up"
+                    size={20}
+                    color="#fff"
+                  />
+                  <Caption>{Math.round(weatherData.main.temp_min)} ºC</Caption>
+                </Row>
+                <Row>
+                  <FontAwesome6
+                    name="temperature-arrow-down"
+                    size={20}
+                    color="#fff"
+                  />
+                  <Caption>{Math.round(weatherData.main.temp_max)} ºC</Caption>
+                </Row>
+                <Row>
+                  <Feather name="wind" size={20} color="#fff" />
+                  <Caption>{Math.round(weatherData.wind.speed)} m/s</Caption>
+                </Row>
+              </Card>
+              <Row style={{ marginTop: 24 }}>
+                <MaterialCommunityIcons
+                  name="copyright"
+                  size={20}
+                  color="#fff"
+                />
+                <Caption>by Rafael Kasper</Caption>
+              </Row>
+            </>
           )}
         </Container>
 
