@@ -9,6 +9,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
+  // Importa as informações do contexto usando o hook criado no contexto
   const { signIn } = useContext(UserContext);
   const [username, setUsername] = useState("");
 

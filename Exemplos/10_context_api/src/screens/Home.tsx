@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const Home = () => {
+  // Importa as informações do contexto usando o hook criado no contexto
   const { user, logout } = useContext(UserContext);
 
   const handleLogout = () => {

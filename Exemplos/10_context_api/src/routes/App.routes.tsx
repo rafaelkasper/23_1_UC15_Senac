@@ -5,6 +5,7 @@ type AppProps = {
   Home: undefined;
 };
 
+// Cria rota stack com a tela inicial
 const Stack = createNativeStackNavigator<AppProps>();
 
 const AppRoutes = () => {
