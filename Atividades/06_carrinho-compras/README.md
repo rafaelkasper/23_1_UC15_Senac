@@ -19,6 +19,11 @@ As bibliotecas listadas abaixo já estão inseridas no package.json
 - [FakeStore API](https://fakestoreapi.com/docs) para a lista de produtos
 - [Me Live Code](https://www.melivecode.com) para o login
 
+## Animações
+
+- [Reanimated - Expo](https://docs.expo.dev/versions/latest/sdk/reanimated/)
+- [Reanimated - Documentação](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations)
+
 ## Instruções
 
 - Este repositório contém os principais componentes do app.
