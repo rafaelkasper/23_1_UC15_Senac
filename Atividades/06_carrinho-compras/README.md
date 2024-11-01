@@ -34,6 +34,13 @@ As bibliotecas listadas abaixo já estão inseridas no package.json
 
 - Você poderá se basear neste layout do Figma: [App de E-commerce](https://www.figma.com/design/JC26On7yCYQnheg06ccN63/Ecomerce?node-id=1-61&m=dev&t=MjZKtJWY12Nv0fXG-1)
 
+# Gerar ícone e Splash Screen
+
+- [Modelos Splash Canva](https://www.canva.com/search?q=Home%20screen)
+- [Modelos Logos Canva](https://www.canva.com/search?q=icone)
+- [Gerar Favicon](https://www.favicon-generator.org/)
+- [Template Figma](https://www.figma.com/community/file/1155362909441341285/expo-app-icon-splash)
+
 ## Avaliação
 
 Neste trabalho serão avaliados os seguintes indicadores do plano do curso:
