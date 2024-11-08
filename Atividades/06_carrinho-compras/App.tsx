@@ -1,4 +1,5 @@
 import { RootSiblingParent } from "react-native-root-siblings";
+import "setimmediate";
 import Routes from "./src/routes";
 import React from "react";
 import { UserProvider } from "./src/contexts/UserContext";
